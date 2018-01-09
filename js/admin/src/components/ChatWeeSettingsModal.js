@@ -1,5 +1,6 @@
 import app from 'flarum/app';
 import SettingsModal from 'flarum/components/SettingsModal';
+import Switch from 'flarum/components/Switch';
 
 const settingsPrefix = 'clarkwinkelmann-chatwee.';
 const translationPrefix = 'clarkwinkelmann-chatwee.admin.settings.';
@@ -31,6 +32,13 @@ export default class ChatWeeSettingsModal extends SettingsModal {
                     bidi: this.setting(settingsPrefix + 'cookieDomain'),
                     placeholder: 'example.com',
                 }),
+            ]),
+            m('.Form-group', [
+                m('label', Switch.component({
+                    state: this.setting(settingsPrefix + 'enableForGuests')(),
+                    onchange: this.setting(settingsPrefix + 'enableForGuests'),
+                    children: app.translator.trans(translationPrefix + 'field.enableForGuests'),
+                })),
             ]),
         ];
     }

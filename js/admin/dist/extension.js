@@ -47,15 +47,17 @@ System.register('clarkwinkelmann/chatwee/addPermissions', ['flarum/extend', 'fla
 });;
 'use strict';
 
-System.register('clarkwinkelmann/chatwee/components/ChatWeeSettingsModal', ['flarum/app', 'flarum/components/SettingsModal'], function (_export, _context) {
+System.register('clarkwinkelmann/chatwee/components/ChatWeeSettingsModal', ['flarum/app', 'flarum/components/SettingsModal', 'flarum/components/Switch'], function (_export, _context) {
     "use strict";
 
-    var app, SettingsModal, settingsPrefix, translationPrefix, ChatWeeSettingsModal;
+    var app, SettingsModal, Switch, settingsPrefix, translationPrefix, ChatWeeSettingsModal;
     return {
         setters: [function (_flarumApp) {
             app = _flarumApp.default;
         }, function (_flarumComponentsSettingsModal) {
             SettingsModal = _flarumComponentsSettingsModal.default;
+        }, function (_flarumComponentsSwitch) {
+            Switch = _flarumComponentsSwitch.default;
         }],
         execute: function () {
             settingsPrefix = 'clarkwinkelmann-chatwee.';
@@ -86,7 +88,11 @@ System.register('clarkwinkelmann/chatwee/components/ChatWeeSettingsModal', ['fla
                         })]), m('.Form-group', [m('label', app.translator.trans(translationPrefix + 'field.cookieDomain')), m('input.FormControl', {
                             bidi: this.setting(settingsPrefix + 'cookieDomain'),
                             placeholder: 'example.com'
-                        })])];
+                        })]), m('.Form-group', [m('label', Switch.component({
+                            state: this.setting(settingsPrefix + 'enableForGuests')(),
+                            onchange: this.setting(settingsPrefix + 'enableForGuests'),
+                            children: app.translator.trans(translationPrefix + 'field.enableForGuests')
+                        }))])];
                     }
                 }]);
                 return ChatWeeSettingsModal;

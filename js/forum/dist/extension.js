@@ -42,13 +42,26 @@ System.register('clarkwinkelmann/chatwee/ChatWeeClient', ['flarum/app', 'clarkwi
                         this.unload();
                     }
 
-                    if (!sessionIdCookieIsSet()) {
+                    var chatId = app.forum.attribute('clarkwinkelmann-chatwee.chatId');
+                    var enableForGuests = app.forum.attribute('clarkwinkelmann-chatwee.enableForGuests');
+
+                    if (!chatId) {
                         return;
                     }
 
-                    var chatId = app.forum.attribute('clarkwinkelmann-chatwee.chatId');
+                    if (!enableForGuests && !sessionIdCookieIsSet()) {
+                        return;
+                    }
 
                     this.chatweeManager = new ChatweeLib.ChatweeManager(chatId);
+
+                    this.chatweeManager.SetChatProperty('chatweeLayout', 'fixed');
+                    this.chatweeManager.SetChatProperty('chatweeAutoStart', false);
+
+                    if (!enableForGuests) {
+                        this.chatweeManager.SetChatProperty('chatweeLoggedUsersOnly', true);
+                    }
+
                     this.chatweeManager.Run();
                 },
                 unload: function unload() {

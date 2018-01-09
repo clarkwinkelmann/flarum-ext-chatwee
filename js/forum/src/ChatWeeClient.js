@@ -8,13 +8,26 @@ export default {
             this.unload();
         }
 
-        if (!sessionIdCookieIsSet()) {
+        const chatId = app.forum.attribute('clarkwinkelmann-chatwee.chatId');
+        const enableForGuests = app.forum.attribute('clarkwinkelmann-chatwee.enableForGuests');
+
+        if (!chatId) {
             return;
         }
 
-        const chatId = app.forum.attribute('clarkwinkelmann-chatwee.chatId');
+        if (!enableForGuests && !sessionIdCookieIsSet()) {
+            return;
+        }
 
         this.chatweeManager = new ChatweeLib.ChatweeManager(chatId);
+
+        this.chatweeManager.SetChatProperty('chatweeLayout', 'fixed');
+        this.chatweeManager.SetChatProperty('chatweeAutoStart', false);
+
+        if (!enableForGuests) {
+            this.chatweeManager.SetChatProperty('chatweeLoggedUsersOnly', true);
+        }
+
         this.chatweeManager.Run();
     },
     unload() {

@@ -7,6 +7,7 @@ clarkwinkelmann-chatwee:
                 chatId: Chat ID
                 clientKey: Client Key
                 cookieDomain: Cookie Domain
+                enableForGuests: Enable for guests
 
         permissions:
             chatweeHeading: Chatwee

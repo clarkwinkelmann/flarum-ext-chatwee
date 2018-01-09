@@ -28,6 +28,7 @@ class InjectSettings
     {
         if ($event->serializer instanceof ForumSerializer) {
             $event->attributes['clarkwinkelmann-chatwee.chatId'] = $this->settings->get('clarkwinkelmann-chatwee.chatId');
+            $event->attributes['clarkwinkelmann-chatwee.enableForGuests'] = (bool)$this->settings->get('clarkwinkelmann-chatwee.enableForGuests');
         }
     }
 }
