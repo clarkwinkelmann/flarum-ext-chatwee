@@ -21,6 +21,7 @@
         "source": "https://github.com/clarkwinkelmann/flarum-ext-chatwee"
     },
     "require": {
+        "php": ">=7.0",
         "flarum/core": "^0.1.0-beta.7"
     },
     "extra": {
