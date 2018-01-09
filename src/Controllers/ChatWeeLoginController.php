@@ -33,6 +33,11 @@ class ChatWeeLoginController implements ControllerInterface
 
         $response = new EmptyResponse();
 
-        return $this->sessionRepository->loginIfAllowed($response, $user);
+        // Do the test again because it might have changed
+        if (ChatWeeHelpers::hasChatWeeAccount($user)) {
+            return $this->sessionRepository->loginIfAllowed($response, $user);
+        }
+
+        return $response;
     }
 }

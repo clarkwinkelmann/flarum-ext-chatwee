@@ -4,6 +4,7 @@ namespace ClarkWinkelmann\ChatWee\Middlewares;
 
 use ClarkWinkelmann\ChatWee\ChatWeeHelpers;
 use ClarkWinkelmann\ChatWee\Repositories\SessionRepository;
+use ClarkWinkelmann\ChatWee\Repositories\UserRepository;
 use Flarum\Core\User;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -21,13 +22,25 @@ class LoginMiddleware implements MiddlewareInterface
             $session = $request->getAttribute('session');
             $actor = User::find($session->get('user_id'));
 
-            if ($actor && ChatWeeHelpers::hasChatWeeAccount($actor)) {
-                /**
-                 * @var $sessionRepository SessionRepository
-                 */
-                $sessionRepository = app(SessionRepository::class);
+            if ($actor) {
+                if (!ChatWeeHelpers::hasChatWeeAccount($actor)) {
+                    /**
+                     * @var $userRepository UserRepository
+                     */
+                    $userRepository = app(UserRepository::class);
 
-                $response = $sessionRepository->loginIfAllowed($response, $actor);
+                    $userRepository->registerIfAllowed($actor);
+                }
+
+                // Do the test again because it might have changed
+                if (ChatWeeHelpers::hasChatWeeAccount($actor)) {
+                    /**
+                     * @var $sessionRepository SessionRepository
+                     */
+                    $sessionRepository = app(SessionRepository::class);
+
+                    $response = $sessionRepository->loginIfAllowed($response, $actor);
+                }
             }
         }
 

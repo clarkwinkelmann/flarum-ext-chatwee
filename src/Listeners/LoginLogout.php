@@ -9,10 +9,8 @@ use ClarkWinkelmann\ChatWee\Repositories\UserRepository;
 use Flarum\Event\ConfigureMiddleware;
 use Flarum\Event\UserAvatarWasChanged;
 use Flarum\Event\UserGroupsWereChanged;
-use Flarum\Event\UserLoggedIn;
 use Flarum\Event\UserPasswordWasChanged;
 use Flarum\Event\UserWasDeleted;
-use Flarum\Event\UserWasRegistered;
 use Flarum\Event\UserWasRenamed;
 use Illuminate\Contracts\Events\Dispatcher;
 
@@ -38,8 +36,6 @@ class LoginLogout
             return;
         }
 
-        $events->listen(UserLoggedIn::class, [$this, 'loggedIn']);
-        $events->listen(UserWasRegistered::class, [$this, 'registered']);
         $events->listen(UserWasRenamed::class, [$this, 'updated']);
         $events->listen(UserAvatarWasChanged::class, [$this, 'updated']);
         $events->listen(UserGroupsWereChanged::class, [$this, 'updated']);
@@ -47,18 +43,6 @@ class LoginLogout
         $events->listen(UserPasswordWasChanged::class, [$this, 'changedPassword']);
 
         $events->listen(ConfigureMiddleware::class, [$this, 'middlewares']);
-    }
-
-    public function loggedIn(UserLoggedIn $event)
-    {
-        if (!ChatWeeHelpers::hasChatWeeAccount($event->user)) {
-            $this->userRepository()->registerIfAllowed($event->user);
-        }
-    }
-
-    public function registered(UserWasRegistered $event)
-    {
-        $this->userRepository()->registerIfAllowed($event->user);
     }
 
     /**
