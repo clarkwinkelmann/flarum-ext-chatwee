@@ -32,6 +32,9 @@
                 "backgroundColor": "#1294F6",
                 "color": "#FAFAFA"
             }
+        },
+        "flagrow": {
+            "discuss": "https://discuss.flarum.org/d/8275-chatwee-sso"
         }
     },
     "autoload": {

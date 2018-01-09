@@ -66,7 +66,7 @@ The original version of this extension was created for [Coinpedi](http://coinped
 
 ## Links
 
-- [Flarum Discuss post](#)
+- [Flarum Discuss post](https://discuss.flarum.org/d/8275-chatwee-sso)
 - [Source code on GitHub](https://github.com/clarkwinkelmann/flarum-ext-chatwee)
 - [Report an issue](https://github.com/clarkwinkelmann/flarum-ext-chatwee/issues)
 - [Download via Packagist](https://packagist.org/packages/clarkwinkelmann/flarum-ext-chatwee)
