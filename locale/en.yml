@@ -9,4 +9,11 @@ clarkwinkelmann-chatwee:
                 cookieDomain: Cookie Domain
 
         permissions:
+            chatweeHeading: Chatwee
+            ssoLogin: Auto-login via SSO
             adminAccess: ChatWee Admin access
+
+    forum:
+        alert:
+            loggedOut: You are not connected to the live chat
+            login: Open the chat

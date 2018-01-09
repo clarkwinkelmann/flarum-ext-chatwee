@@ -27,7 +27,7 @@ class LoginMiddleware implements MiddlewareInterface
                  */
                 $sessionRepository = app(SessionRepository::class);
 
-                $response = $sessionRepository->login($response, $actor);
+                $response = $sessionRepository->loginIfAllowed($response, $actor);
             }
         }
 

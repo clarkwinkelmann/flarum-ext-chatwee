@@ -39,6 +39,8 @@ class SessionRepository
 
     protected function configureCookie(SetCookie $cookie): SetCookie
     {
+        $cookie = $cookie->withPath('/');
+
         $domain = $this->settings->get('clarkwinkelmann-chatwee.cookieDomain');
 
         if ($domain) {
@@ -48,7 +50,7 @@ class SessionRepository
         return $cookie;
     }
 
-    public function login(ResponseInterface $response, User $user): ResponseInterface
+    protected function login(ResponseInterface $response, User $user): ResponseInterface
     {
         if (!ChatWeeHelpers::hasChatWeeAccount($user)) {
             throw new \Exception('User does not have a ChatWee account');
@@ -56,10 +58,26 @@ class SessionRepository
 
         $sessionId = $this->client->loginUser(ChatWeeHelpers::getChatWeeUserId($user));
 
-        return FigResponseCookies::set(
+        $response = FigResponseCookies::set(
             $response,
             $this->configureCookie(SetCookie::create($this->cookieName(), $sessionId))
         );
+
+        $response = FigResponseCookies::set(
+            $response,
+            $this->configureCookie(SetCookie::create('flarum_chatwee_session', $sessionId))
+        );
+
+        return $response;
+    }
+
+    public function loginIfAllowed(ResponseInterface $response, User $user): ResponseInterface
+    {
+        if ($user->can('clarkwinkelmann-chatwee.ssoLogin')) {
+            return $this->login($response, $user);
+        }
+
+        return $response;
     }
 
     public function logout(RequestInterface $request, ResponseInterface $response)
@@ -70,9 +88,16 @@ class SessionRepository
             $this->client->removeSession($sessionId);
         }
 
-        return FigResponseCookies::set(
+        $response = FigResponseCookies::set(
             $response,
             $this->configureCookie(SetCookie::createExpired($this->cookieName()))
         );
+
+        $response = FigResponseCookies::set(
+            $response,
+            $this->configureCookie(SetCookie::createExpired('flarum_chatwee_session'))
+        );
+
+        return $response;
     }
 }

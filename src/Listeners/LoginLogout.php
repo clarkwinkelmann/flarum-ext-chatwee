@@ -52,13 +52,13 @@ class LoginLogout
     public function loggedIn(UserLoggedIn $event)
     {
         if (!ChatWeeHelpers::hasChatWeeAccount($event->user)) {
-            $this->userRepository()->register($event->user);
+            $this->userRepository()->registerIfAllowed($event->user);
         }
     }
 
     public function registered(UserWasRegistered $event)
     {
-        $this->userRepository()->register($event->user);
+        $this->userRepository()->registerIfAllowed($event->user);
     }
 
     /**

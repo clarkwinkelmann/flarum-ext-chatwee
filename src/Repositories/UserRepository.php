@@ -20,7 +20,7 @@ class UserRepository
         return $user->can('clarkwinkelmann-chatwee.adminAccess');
     }
 
-    public function register(User $user)
+    protected function register(User $user)
     {
         if (ChatWeeHelpers::hasChatWeeAccount($user)) {
             throw new \Exception('User already has a ChatWee account');
@@ -34,6 +34,13 @@ class UserRepository
 
         $user->chatwee_user_id = $userId;
         $user->save();
+    }
+
+    public function registerIfAllowed(User $user)
+    {
+        if ($user->can('clarkwinkelmann-chatwee.ssoLogin')) {
+            $this->register($user);
+        }
     }
 
     public function logoutEverywhere(User $user)
