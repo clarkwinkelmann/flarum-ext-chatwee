@@ -4,7 +4,8 @@ System.register('clarkwinkelmann/chatwee/configureChatWeeClient', ['flarum/exten
     "use strict";
 
     var extend, app, Page;
-    function configureChatWeeClient() {
+
+    _export('default', function () {
         var isConfigured = false;
 
         // We need app.forum to be available, so we run this on page init, but only once
@@ -24,9 +25,7 @@ System.register('clarkwinkelmann/chatwee/configureChatWeeClient', ['flarum/exten
             var chatweeManager = new ChatweeLib.ChatweeManager(chatId);
             chatweeManager.Run();
         });
-    }
-
-    _export('default', configureChatWeeClient);
+    });
 
     return {
         setters: [function (_flarumExtend) {

@@ -7,3 +7,6 @@ clarkwinkelmann-chatwee:
                 chatId: Chat ID
                 clientKey: Client Key
                 cookieDomain: Cookie Domain
+
+        permissions:
+            adminAccess: ChatWee Admin access

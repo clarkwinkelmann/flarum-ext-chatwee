@@ -2,7 +2,7 @@ import {extend} from 'flarum/extend';
 import app from 'flarum/app';
 import Page from 'flarum/components/Page';
 
-export default function configureChatWeeClient() {
+export default function () {
     let isConfigured = false;
 
     // We need app.forum to be available, so we run this on page init, but only once

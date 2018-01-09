@@ -15,6 +15,11 @@ class UserRepository
         $this->client = $client;
     }
 
+    protected function isAdmin(User $user)
+    {
+        return $user->can('clarkwinkelmann-chatwee.adminAccess');
+    }
+
     public function register(User $user)
     {
         if (ChatWeeHelpers::hasChatWeeAccount($user)) {
@@ -23,7 +28,7 @@ class UserRepository
 
         $userId = $this->client->registerUser(
             $user->username,
-            $user->isAdmin(),
+            $this->isAdmin($user),
             $user->avatar_url
         );
 
@@ -49,7 +54,7 @@ class UserRepository
         $this->client->editUser(
             ChatWeeHelpers::getChatWeeUserId($user),
             $user->username,
-            $user->isAdmin(),
+            $this->isAdmin($user),
             $user->avatar_url
         );
     }

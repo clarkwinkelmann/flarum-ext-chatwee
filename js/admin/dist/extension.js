@@ -51,10 +51,10 @@ System.register('clarkwinkelmann/chatwee/components/ChatWeeSettingsModal', ['fla
 });;
 'use strict';
 
-System.register('clarkwinkelmann/chatwee/main', ['flarum/extend', 'flarum/app', 'clarkwinkelmann/chatwee/components/ChatWeeSettingsModal'], function (_export, _context) {
+System.register('clarkwinkelmann/chatwee/main', ['flarum/extend', 'flarum/app', 'clarkwinkelmann/chatwee/components/ChatWeeSettingsModal', 'clarkwinkelmann/chatwee/addPermissions'], function (_export, _context) {
     "use strict";
 
-    var extend, app, ChatWeeSettingsModal;
+    var extend, app, ChatWeeSettingsModal, addPermissions;
     return {
         setters: [function (_flarumExtend) {
             extend = _flarumExtend.extend;
@@ -62,6 +62,8 @@ System.register('clarkwinkelmann/chatwee/main', ['flarum/extend', 'flarum/app', 
             app = _flarumApp.default;
         }, function (_clarkwinkelmannChatweeComponentsChatWeeSettingsModal) {
             ChatWeeSettingsModal = _clarkwinkelmannChatweeComponentsChatWeeSettingsModal.default;
+        }, function (_clarkwinkelmannChatweeAddPermissions) {
+            addPermissions = _clarkwinkelmannChatweeAddPermissions.default;
         }],
         execute: function () {
 
@@ -69,7 +71,37 @@ System.register('clarkwinkelmann/chatwee/main', ['flarum/extend', 'flarum/app', 
                 app.extensionSettings['clarkwinkelmann-chatwee'] = function () {
                     return app.modal.show(new ChatWeeSettingsModal());
                 };
+
+                addPermissions();
             });
         }
+    };
+});;
+'use strict';
+
+System.register('clarkwinkelmann/chatwee/addPermissions', ['flarum/extend', 'flarum/app', 'flarum/components/PermissionGrid'], function (_export, _context) {
+    "use strict";
+
+    var extend, app, PermissionGrid;
+
+    _export('default', function () {
+        extend(PermissionGrid.prototype, 'moderateItems', function (items) {
+            items.add('clarkwinkelmann-chatwee-admin-access', {
+                icon: 'comments',
+                label: app.translator.trans('clarkwinkelmann-chatwee.admin.permissions.adminAccess'),
+                permission: 'clarkwinkelmann-chatwee.adminAccess'
+            });
+        });
+    });
+
+    return {
+        setters: [function (_flarumExtend) {
+            extend = _flarumExtend.extend;
+        }, function (_flarumApp) {
+            app = _flarumApp.default;
+        }, function (_flarumComponentsPermissionGrid) {
+            PermissionGrid = _flarumComponentsPermissionGrid.default;
+        }],
+        execute: function () {}
     };
 });
