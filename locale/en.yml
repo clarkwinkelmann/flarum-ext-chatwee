@@ -1,0 +1,9 @@
+clarkwinkelmann-chatwee:
+    admin:
+        settings:
+            title: ChatWee Settings
+
+            field:
+                chatId: Chat ID
+                clientKey: Client Key
+                cookieDomain: Cookie Domain

@@ -1,0 +1,41 @@
+{
+    "name": "clarkwinkelmann/flarum-ext-chatwee",
+    "description": "Integrate ChatWee SSO with Flarum",
+    "keywords": [
+        "extension",
+        "flarum",
+        "chat",
+        "chatwee"
+    ],
+    "type": "flarum-extension",
+    "license": "mit",
+    "authors": [
+        {
+            "name": "Clark Winkelmann",
+            "email": "clark.winkelmann@gmail.com",
+            "homepage": "https://clarkwinkelmann.com/"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/clarkwinkelmann/flarum-ext-chatwee/issues",
+        "source": "https://github.com/clarkwinkelmann/flarum-ext-chatwee"
+    },
+    "require": {
+        "flarum/core": "^0.1.0-beta.7"
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "ChatWee",
+            "icon": {
+                "name": "comments",
+                "backgroundColor": "#1294F6",
+                "color": "#FAFAFA"
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "ClarkWinkelmann\\ChatWee\\": "src/"
+        }
+    }
+}
