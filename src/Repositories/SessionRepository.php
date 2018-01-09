@@ -32,6 +32,11 @@ class SessionRepository
         return 'chatwee-SID-' . $this->settings->get('clarkwinkelmann-chatwee.chatId');
     }
 
+    protected function controlCookieName()
+    {
+        return 'flarum-chatwee-' . $this->settings->get('clarkwinkelmann-chatwee.chatId');
+    }
+
     protected function getSessionId(RequestInterface $request)
     {
         return FigRequestCookies::get($request, $this->cookieName())->getValue();
@@ -65,7 +70,7 @@ class SessionRepository
 
         $response = FigResponseCookies::set(
             $response,
-            $this->configureCookie(SetCookie::create('flarum_chatwee_session', $sessionId))
+            $this->configureCookie(SetCookie::create($this->controlCookieName(), $sessionId))
         );
 
         return $response;
@@ -95,7 +100,7 @@ class SessionRepository
 
         $response = FigResponseCookies::set(
             $response,
-            $this->configureCookie(SetCookie::createExpired('flarum_chatwee_session'))
+            $this->configureCookie(SetCookie::createExpired($this->controlCookieName()))
         );
 
         return $response;

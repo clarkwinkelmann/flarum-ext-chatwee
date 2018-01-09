@@ -261,11 +261,14 @@ System.register('clarkwinkelmann/chatwee/sessionIdCookieIsSet', ['flarum/app'], 
     }
 
     _export('default', function () {
-        var ssoCookieName = 'chatwee-SID-' + app.forum.attribute('clarkwinkelmann-chatwee.chatId');
+        var chatId = app.forum.attribute('clarkwinkelmann-chatwee.chatId');
+
+        var controlCookieName = 'flarum-chatwee-' + chatId;
+        var ssoCookieName = 'chatwee-SID-' + chatId;
 
         // We can't check against the chatwee-SID-chatId cookie only, because that cookie is automatically set by the
         // javascript client is none is present. Instead we use another cookie that is only created by Flarum upon ChatWee SSO login
-        return cookieIsSet('flarum_chatwee_session') && cookieIsSet(ssoCookieName);
+        return cookieIsSet(controlCookieName) && cookieIsSet(ssoCookieName);
     });
 
     return {

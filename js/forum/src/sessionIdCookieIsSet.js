@@ -5,9 +5,12 @@ function cookieIsSet(cookieName) {
 }
 
 export default function() {
-    const ssoCookieName = 'chatwee-SID-' + app.forum.attribute('clarkwinkelmann-chatwee.chatId');
+    const chatId = app.forum.attribute('clarkwinkelmann-chatwee.chatId');
+
+    const controlCookieName = 'flarum-chatwee-' + chatId;
+    const ssoCookieName = 'chatwee-SID-' + chatId;
 
     // We can't check against the chatwee-SID-chatId cookie only, because that cookie is automatically set by the
     // javascript client is none is present. Instead we use another cookie that is only created by Flarum upon ChatWee SSO login
-    return cookieIsSet('flarum_chatwee_session') && cookieIsSet(ssoCookieName);
+    return cookieIsSet(controlCookieName) && cookieIsSet(ssoCookieName);
 }
