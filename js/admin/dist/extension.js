@@ -89,7 +89,7 @@ System.register('clarkwinkelmann/chatwee/components/ChatWeeSettingsModal', ['fla
                             bidi: this.setting(settingsPrefix + 'cookieDomain'),
                             placeholder: 'example.com'
                         })]), m('.Form-group', [m('label', Switch.component({
-                            state: this.setting(settingsPrefix + 'enableForGuests')(),
+                            state: [true, '1'].indexOf(this.setting(settingsPrefix + 'enableForGuests')()) !== -1,
                             onchange: this.setting(settingsPrefix + 'enableForGuests'),
                             children: app.translator.trans(translationPrefix + 'field.enableForGuests')
                         }))])];
